@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário</title>
+</head>
+<body>
+    <h1>Formulário</h1>
+    <form action="{{ url_for('form') }}" method="post">
+        <label for="nome_da_atividade">Agende as suas atividades:</label>
+        <input type="text" name="nome_da_atividade" id="nome_da_atividade" required>
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>

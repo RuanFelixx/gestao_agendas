@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário</title>
-
+    <title>Cadastrar Tarefa</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
@@ -64,12 +63,17 @@
 </head>
 <body>
     <div class="formulario">
-        <h1>Formulário</h1>
+        <h1>Cadastrar Tarefa</h1>
         <form action="{{ url_for('form') }}" method="post">
-            <!-- <label for="nome_da_atividade">Agende as suas atividades:</label> -->
-            <input type="text" name="nome_da_atividade" id="nome_da_atividade" required placeholder="Ciar atividade">
-            <input type="submit" value="Criar" id="enviar">
+            <input type="text" name="tar_nome" id="tar_nome" placeholder="Nome da Tarefa" required>
+
+            <input type="text" name="tar_descricao" id="tar_descricao" placeholder="Descrição">
+
+            <input type="date" name="tar_entrega" id="tar_entrega" placeholder="Data de entrega">
+
+            <input type="text" name="cat_nome" id="cat_nome" placeholder="categoria">
         </form>
+        <a href="{{ url_for('index') }}">Voltar</a>
     </div>
 </body>
 </html>

@@ -25,15 +25,19 @@ def form():
         tar_descricao = request.form['tar_descricao']
         tar_entrega = request.form['tar_entrega']
 
-        conn = conexao.connection.cursor()
-        conn.execute("""
-            INSERT INTO tb_tarefas (tar_nome, tar_descricao, tar_entrega) 
-            VALUES (%s, %s, %s)
-        """, (tar_nome, tar_descricao, tar_entrega))
-        conexao.connection.commit()
-        conn.close()
+        try:
+            conn = conexao.connection.cursor()
+            conn.execute("""
+                INSERT INTO tb_tarefas (tar_nome, tar_descricao, tar_entrega) 
+                VALUES (%s, %s, %s)
+            """, (tar_nome, tar_descricao, tar_entrega))
+            conexao.connection.commit()
+            conn.close()
 
-        return render_template('form.html', nome_da_atividade=tar_nome)
+            return redirect(url_for('index')) 
+        except Exception as erro:
+            return str(erro)  
+
 
 @app.route('/inicial', methods=['GET', 'POST'])
 def inicial():

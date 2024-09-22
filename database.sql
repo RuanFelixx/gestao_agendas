@@ -4,7 +4,7 @@ use db_agenda;
 create table tb_usuarios(
 usu_id int primary key not null auto_increment,
 usu_nome varchar(45) not null,
-usu_senha varchar(45) not null,
+usu_senha varchar(255) not null,
 usu_email varchar(100) not null
 );
 

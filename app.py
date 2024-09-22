@@ -1,5 +1,8 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, url_for, redirect, request
 from flask_mysqldb import MySQL
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, login_required, login_user, logout_user, UserMixin
+from user_models import User
 
 app = Flask(__name__)
 
@@ -12,7 +15,44 @@ conexao = MySQL(app)
 
 @app.route('/')
 def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        senha = request.form['senha']
+        conn = conexao.connection.cursor()
+        conn.execute('SELECT usu_senha FROM tb_usuarios WHERE usu_email=%s',(email,))
+        senha_hash = conn.fetchone()
+        print('RESULTADO', senha_hash['usu_senha'], type(senha_hash))
+        senha_correta = check_password_hash(senha_hash['usu_senha'],str(senha))
+        print('Senha ta correta?',senha_correta)
+        if email and senha_correta:
+            login_user(User.get_by_email(email))
+            return redirect(url_for('inicial'))
     return render_template('login.html')
+
+@app.route('/cadastro', methods = ['POST'])
+def cadastro():
+    if request.method == 'POST':
+        nome = request.form['nome']
+        email = request.form['email']
+        senha = request.form['senha']
+        senha = generate_password_hash(str(senha))
+
+        conn = conexao.connection.cursor()
+        conn.execute('INSERT INTO tb_usuarios(usu_nome,usu_senha,usu_email) VALUES (%s,%s,%s)', (nome,senha,email,))
+        conexao.connection.commit()
+        login_user(User.get_by_email(email))
+        return redirect(url_for(''))
+    return render_template('index.html')
+
+# Olhar essa parte!
+login_manager = LoginManager()
+app.config['SECRET_KEY'] = 'tarefas'
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
+# Até aqui
 
 @app.route('/index', methods=['GET'])
 def index():

@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS 'db_agenda';
-USE 'db_agenda';
+CREATE DATABASE IF NOT EXISTS db_agenda;
+USE db_agenda;
 
 CREATE TABLE IF NOT EXISTS tb_usuarios (
     usu_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,

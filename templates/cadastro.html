@@ -76,8 +76,8 @@
     <div class="container">
         <div class="box">
 
-            <h1>login</h1>
-            <form action="{{url_for('index')}}">
+            <h1>cadastro</h1>
+            <form action="/cadastro" method="POST"> <!--action antes tava {{url_for('index')}} mudei so por enquanto-->
                 <input type="text" name="nome" placeholder="nome">
                 <input type="email" name="email" placeholder="email">
                 <input type="password" name="senha" placeholder="senha">

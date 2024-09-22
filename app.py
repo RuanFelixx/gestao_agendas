@@ -1,27 +1,65 @@
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, render_template, url_for, redirect, request, flash
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_required, login_user, logout_user, UserMixin
-from user_models import User
+from models import User, Contato
+from flask_mail import Mail, Message
+from config import email, senha
+
 
 app = Flask(__name__)
+app.secret_key = 'sebosao'
+
+email_settings = {
+    "MAIL_SERVER": 'smtp.gmail.com',
+    "MAIL_PORT": 465,
+    "MAIL_USER_TLS": False,
+    "MAIL_USER_SSL": True,
+    "MAIL_USERNAME": email,
+    "MAIL_PASSWORD": senha
+}
+
 
 app.config["MYSQL_USER"] = "root"
 app.config["MYSQL_PASSWORD"] = ""
-app.config["MYSQL_DB"] = "db_agenda"
+app.config["MYSQL_DB"] = "projetoro"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
+app.config.update(email_settings)
 
+mail = Mail(app)
 conexao = MySQL(app)
 
-@app.route('/', methods=['GET', 'POST']) 
+@app.route('/', methods=['GET', 'POST'])
+def inicial():
+    return render_template('inicial.html')
+
+@app.route('/login', methods=['GET', 'POST']) 
 def login():
     if request.method == 'POST':
+        nome = request.form['nome']
         email = request.form['email']
         senha = request.form['senha']
         conn = conexao.connection.cursor()
         conn.execute('SELECT usu_senha FROM tb_usuarios WHERE usu_email=%s', (email,))
         senha_hash = conn.fetchone()
         conn.close()  # Close cursor
+
+        formcontato = Contato(nome,email)
+
+        msg = Message(
+            subject= f'{formcontato.nome} obrigado por se cadastrar nop nosso site',
+            sender = app.config.get("MAIL_USERNAME"),
+            recipients = [formcontato.email, app.config.get("MAIL_USERNAME")],
+            body = ''' 
+            
+            {formcontato.nome} você fez login com o email {fromcontato.email}, obrigado por fazer
+            parte da nossa historia !!
+
+            '''
+        )
+
+        mail.send(msg)
+        flash('email enviado com sucesso!')
 
         if senha_hash and check_password_hash(senha_hash['usu_senha'], str(senha)):
             login_user(User.get_by_email(email))
@@ -30,7 +68,7 @@ def login():
             return "Invalid email or password"  
     return render_template('login.html')
 
-@app.route('/cadastro', methods=['POST'])
+@app.route('/cadastro', methods=['GET','POST'])
 def cadastro():
     if request.method == 'POST':
         nome = request.form['nome']
@@ -40,9 +78,28 @@ def cadastro():
         conn = conexao.connection.cursor()
         conn.execute('INSERT INTO tb_usuarios(usu_nome, usu_senha, usu_email) VALUES (%s, %s, %s)', (nome, senha, email))
         conexao.connection.commit()
-        conn.close()  
+        conn.close() 
+
+        formcontato = Contato(nome,email)
+
+        msg = Message(
+            subject= f'{formcontato.nome} obrigado por se cadastrar nop nosso site',
+            sender = app.config.get("MAIL_USERNAME"),
+            recipients = [formcontato.email, app.config.get("MAIL_USERNAME")],
+            body = ''' 
+            
+            {formcontato.nome} você se cadastrou com o email {fromcontato.email}, obrigado por fazer
+            parte da nossa historia !!
+
+            '''
+        )
+
+        mail.send(msg)
+        flash('email enviado com sucesso!')
+
         login_user(User.get_by_email(email))
-        return redirect(url_for('index'))  
+        return redirect(url_for('inicial')) #mudei para inicia'l para ir fazer o logi em vez de ja logar assim que faz o cadastro   
+    return render_template('cadastro.html')
 
 
 login_manager = LoginManager()
@@ -77,17 +134,9 @@ def form():
         except Exception as erro:
             return str(erro) 
 
-@app.route('/inicial', methods=['GET', 'POST'])
-def inicial():
-    return render_template('inicial.html')
 
-@app.route('/agendar')
-def agendar():
-    return render_template('agendar.html')
+# apagadas as rotas /agendar e /visualizar pois elas não estao sendo usadas
 
-@app.route('/visualizar')
-def visualizar():
-    return render_template('visualizar.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

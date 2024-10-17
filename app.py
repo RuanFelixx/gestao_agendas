@@ -22,7 +22,7 @@ email_settings = {
 
 app.config["MYSQL_USER"] = "root"
 app.config["MYSQL_PASSWORD"] = ""
-app.config["MYSQL_DB"] = "projetoro"
+app.config["MYSQL_DB"] = "db_agenda"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 app.config.update(email_settings)
 
@@ -120,20 +120,25 @@ def form():
         tar_nome = request.form['tar_nome']
         tar_descricao = request.form['tar_descricao']
         tar_entrega = request.form['tar_entrega']
+        tar_cat_id = 1
+        tar_usu_id = 1
 
         try:
+        # Pegar do banco cat_id e user_id
+        # tar_cat_id = cat_id
+        # tar_user_id = user_id
             conn = conexao.connection.cursor()
             conn.execute("""
-                INSERT INTO tb_tarefas (tar_nome, tar_descricao, tar_entrega) 
-                VALUES (%s, %s, %s)
-            """, (tar_nome, tar_descricao, tar_entrega))
+                INSERT INTO tb_tarefas (tar_nome, tar_descricao, tar_entrega, tar_cat_id, tar_usu_id) 
+                VALUES (%s, %s, %s, %s, %s)
+            """, (tar_nome, tar_descricao, tar_entrega, tar_cat_id, tar_usu_id))
             conexao.connection.commit()
             conn.close()  
 
             return redirect(url_for('index')) 
         except Exception as erro:
             return str(erro) 
-
+    # Retornar o form
 
 # apagadas as rotas /agendar e /visualizar pois elas não estao sendo usadas
 

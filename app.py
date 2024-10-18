@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, redirect, request, flash
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, login_required, login_user, logout_user, UserMixin
+from flask_login import LoginManager, login_user
 from models import User, Contato
 from flask_mail import Mail, Message
 from config import email, senha
@@ -18,7 +18,6 @@ email_settings = {
     "MAIL_USERNAME": email,
     "MAIL_PASSWORD": senha
 }
-
 
 app.config["MYSQL_USER"] = "root"
 app.config["MYSQL_PASSWORD"] = ""
@@ -98,7 +97,7 @@ def cadastro():
         flash('email enviado com sucesso!')
 
         login_user(User.get_by_email(email))
-        return redirect(url_for('inicial')) #mudei para inicia'l para ir fazer o logi em vez de ja logar assim que faz o cadastro   
+        return redirect(url_for('inicial')) #mudei para inicial para ir fazer o logi em vez de ja logar assim que faz o cadastro   
     return render_template('cadastro.html')
 
 
@@ -123,39 +122,43 @@ def form():
         tar_cat_id = 1
         tar_usu_id = 1
 
-        try:
-        # OK! Os erros, segundo Romerito, são esses:  
-        # Pegar do banco cat_id e user_id
-            """Tem que pegar esses dois valores do banco, porque eles são chaves estrangeiras, 
-            mas seus valores não estão sendo passados. Além disso, também testamos fazer tar_cat_id = 1 e tar_user_id = 1, só que isso 
-            deu ruin, não sei porque. 
+    # OK! Os erros, segundo Romerito, são esses:  
+    # Pegar do banco cat_id e user_id
+        """Tem que pegar esses dois valores do banco, porque eles são chaves estrangeiras, 
+        mas seus valores não estão sendo passados. Além disso, também testamos fazer tar_cat_id = 1 e tar_user_id = 1, só que isso 
+        deu ruin, não sei porque. 
 
-            RESOLUÇÃO, SEGUNDO OQUE EU ENTENDI QUE ROMERITO DISSE:
-                Pegar os valores de cat_id e user_id do próprio banco e adicionar.
-            """
-        # tar_cat_id = cat_id
-        # tar_user_id = user_id
-            conn = conexao.connection.cursor()
-            conn.execute("""
-                INSERT INTO tb_tarefas (tar_nome, tar_descricao, tar_entrega, tar_cat_id, tar_usu_id) 
-                VALUES (%s, %s, %s, %s, %s)
-            """, (tar_nome, tar_descricao, tar_entrega, tar_cat_id, tar_usu_id))
-            conexao.connection.commit()
-            conn.close()  
+        RESOLUÇÃO, SEGUNDO OQUE EU ENTENDI QUE ROMERITO DISSE:
+            Pegar os valores de cat_id e user_id do próprio banco e adicionar.
+        """
+    # tar_cat_id = cat_id
+    # tar_user_id = user_id
 
-            return redirect(url_for('index')) 
-        except Exception as erro:
-            return str(erro) 
+
+        conn = conexao.connection.cursor()
+        conn.execute("""
+            INSERT INTO tb_tarefas (tar_nome, tar_descricao, tar_entrega, tar_cat_id, tar_usu_id) 
+            VALUES (%s, %s, %s, %s, %s)
+        """, (tar_nome, tar_descricao, tar_entrega, tar_cat_id, tar_usu_id))
+        conexao.connection.commit()
+        conn.close()  
+
+        return redirect(url_for('index')) 
     # Retornar o form
     """O form não tá sendo retornado, e isso tá dando erro na hora de cadastrar tarefas, porque só presta se tiver tudo OK,
     mas se o usuário cometer qualquer erro o sistema dá erro porque não retorna nada.
     """
 
-"""Aqui Davi apagou porque disse que não tava funcionamdo!"""
-# apagadas as rotas /agendar e /visualizar pois elas não estao sendo usadas
 
 
+# Voltei com essas rotas, agora é definir pra onde elas levam depois de respondidas e oque fazem
+@app.route('/agendar')
+def agendar():
+    return render_template('agendar.html')
+
+@app.route('/visualizar')
+def visualizar():
+    return render_template('visualizar.html')
+    
 if __name__ == "__main__":
     app.run(debug=True)
-
-

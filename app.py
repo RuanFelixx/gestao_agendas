@@ -124,7 +124,15 @@ def form():
         tar_usu_id = 1
 
         try:
+        # OK! Os erros, segundo Romerito, são esses:  
         # Pegar do banco cat_id e user_id
+            """Tem que pegar esses dois valores do banco, porque eles são chaves estrangeiras, 
+            mas seus valores não estão sendo passados. Além disso, também testamos fazer tar_cat_id = 1 e tar_user_id = 1, só que isso 
+            deu ruin, não sei porque. 
+
+            RESOLUÇÃO, SEGUNDO OQUE EU ENTENDI QUE ROMERITO DISSE:
+                Pegar os valores de cat_id e user_id do próprio banco e adicionar.
+            """
         # tar_cat_id = cat_id
         # tar_user_id = user_id
             conn = conexao.connection.cursor()
@@ -139,7 +147,11 @@ def form():
         except Exception as erro:
             return str(erro) 
     # Retornar o form
+    """O form não tá sendo retornado, e isso tá dando erro na hora de cadastrar tarefas, porque só presta se tiver tudo OK,
+    mas se o usuário cometer qualquer erro o sistema dá erro porque não retorna nada.
+    """
 
+"""Aqui Davi apagou porque disse que não tava funcionamdo!"""
 # apagadas as rotas /agendar e /visualizar pois elas não estao sendo usadas
 
 

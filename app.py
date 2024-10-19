@@ -97,7 +97,7 @@ def cadastro():
         flash('email enviado com sucesso!')
 
         login_user(User.get_by_email(email))
-        return redirect(url_for('index')) #mudei para inicial para ir fazer o logi em vez de ja logar assim que faz o cadastro   
+        return redirect(url_for('index')) #mudei para index para ir fazer o logi em vez de ja logar assim que faz o cadastro   
     return render_template('cadastro.html')
 
 

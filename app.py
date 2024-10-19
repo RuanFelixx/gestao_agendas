@@ -29,8 +29,8 @@ mail = Mail(app)
 conexao = MySQL(app)
 
 @app.route('/')
-def inicial():
-    return render_template('inicial.html')
+def index():
+    return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST']) 
 def login():
@@ -62,7 +62,7 @@ def login():
 
         if senha_hash and check_password_hash(senha_hash['usu_senha'], str(senha)):
             login_user(User.get_by_email(email))
-            return redirect(url_for('inicial'))
+            return redirect(url_for('index'))
         else:
             return "Invalid email or password"  
     return render_template('login.html')
@@ -97,7 +97,7 @@ def cadastro():
         flash('email enviado com sucesso!')
 
         login_user(User.get_by_email(email))
-        return redirect(url_for('inicial')) #mudei para inicial para ir fazer o logi em vez de ja logar assim que faz o cadastro   
+        return redirect(url_for('index')) #mudei para inicial para ir fazer o logi em vez de ja logar assim que faz o cadastro   
     return render_template('cadastro.html')
 
 
@@ -108,10 +108,6 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     return User.get(user_id)
-
-@app.route('/index', methods=['GET'])
-def index():
-    return render_template('index.html')
 
 @app.route('/form', methods=['GET', 'POST'])
 def form():

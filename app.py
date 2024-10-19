@@ -12,7 +12,8 @@ from config import email, senha
 1ª - MySQLdb.OperationalError: (1045, "Access denied for user 'root'@'localhost' (using password: NO)")
 2ª - Vê se as páginas estão "respondendo" aos comandos.
 3ª - A página visualizar não tem nada!
-4ª - Apagar essa quantidade absurda de comentários.
+4ª - Conferir se tá tudo OK. 
+5ª - Apagar essa quantidade absurda de comentários.
 """
 
 
@@ -155,13 +156,12 @@ def form():
     mas se o usuário cometer qualquer erro o sistema dá erro porque não retorna nada.
     """
 
-
-
-# Voltei com essas rotas, agora é definir pra onde elas levam depois de respondidas e oque fazem
+# Talvez tenha que mexer aqui também!
 @app.route('/agendar')
 def agendar():
     return render_template('agendar.html')
 
+# Essa rota só pode ser finalizada quando os banco tiver funcionando, porque aqui é onde vão ser exibidas as tarefas
 @app.route('/visualizar')
 def visualizar():
     return render_template('visualizar.html')

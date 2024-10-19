@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+       }
+
+        header {
+            background: #4CAF50; 
+            color: white;
+            height: 15vh;
+            padding: 10px;
+            text-align: center; 
+        }
+
+        nav { 
+            margin: 15px 0; 
+        }
+
+        nav a {
+            margin: 0 15px; 
+            color: #333; 
+            text-decoration: none; 
+        }
+
+        .container {
+            padding: 20px;
+            height: 75vh;
+        }
+
+        footer { 
+            background: #333; 
+            color: white; 
+            text-align: center; 
+            padding: 10px;  
+            bottom: 0;
+            height: 10vh;
+            width: 100%;
+        }
+        
+
+        .formulario{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            height: 75vh;
+        }
+
+        .agenda{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            height: 75vh;
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <h1>Agendador de Atividades</h1>
+        <nav>
+            <a href="{{url_for('index')}}">Home</a>
+            <a href="{{url_for('visualizar')}}">Agendamentos</a>
+            <a href="{{url_for('login')}}">Login</a>
+        </nav>
+    </header>
+
+    <div class="agenda">
+        <h1>Agende sua atividade</h1>
+        <form action="{{ url_for('form') }}" method="POST">
+            <input type="text" name="nome_atividade" placeholder="Nome da atividade">
+            <input type="text" name="desc_atividade" placeholder="Descrição da atividade">
+            <input type="text" name="cat_nome" placeholder="Categoria">
+            <input type="date" name="data_da_atividade">
+            <button type="submit">agendar atividade</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>Contato: sebosão@69.com </p>
+    </footer>
+</body>
+</html>

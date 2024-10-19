@@ -74,9 +74,9 @@
 
     <div class="agenda">
         <h1>Agende sua atividade</h1>
-        <form action="">
-            <input type="text" name="nome_atividade" placeholder="nome da atividade">
-            <label for="data_da_atividade">data de vencimento</label>
+        <form action="{{ url_for('form') }}" method="POST">
+            <input type="text" name="nome_atividade" placeholder="Nome da atividade">
+            <input type="text" name="desc_atividade" placeholder="Descrição da atividade">
             <input type="date" name="data_da_atividade">
             <button type="submit">agendar atividade</button>
         </form>

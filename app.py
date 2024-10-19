@@ -10,8 +10,9 @@ from config import email, senha
 # Oque fazer nesse primeiro momento:
 """
 1ª - MySQLdb.OperationalError: (1045, "Access denied for user 'root'@'localhost' (using password: NO)")
-2ª - Vê se as páginas estão "respondendo" aos comandos
+2ª - Vê se as páginas estão "respondendo" aos comandos.
 3ª - A página visualizar não tem nada!
+4ª - Apagar essa quantidade absurda de comentários.
 """
 
 

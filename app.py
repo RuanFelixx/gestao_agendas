@@ -28,7 +28,7 @@ app.config.update(email_settings)
 mail = Mail(app)
 conexao = MySQL(app)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def inicial():
     return render_template('inicial.html')
 
@@ -119,8 +119,9 @@ def form():
         tar_nome = request.form['nome_atividade']
         tar_descricao = request.form['desc_atividade']
         tar_entrega = request.form['data_da_atividade']
-        tar_cat_id = 1
-        tar_usu_id = 1
+        # Fazer com base na cateoria
+        tar_cat_id = 1 # Esse valor é só um teste
+        tar_usu_id = 1 # Esse também
 
     # OK! Os erros, segundo Romerito, são esses:  
     # Pegar do banco cat_id e user_id
@@ -159,8 +160,6 @@ def agendar():
 @app.route('/visualizar')
 def visualizar():
     return render_template('visualizar.html')
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)

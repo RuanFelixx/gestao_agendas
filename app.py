@@ -116,9 +116,9 @@ def index():
 @app.route('/form', methods=['GET', 'POST'])
 def form():
     if request.method == 'POST':
-        tar_nome = request.form['tar_nome']
-        tar_descricao = request.form['tar_descricao']
-        tar_entrega = request.form['tar_entrega']
+        tar_nome = request.form['nome_atividade']
+        tar_descricao = request.form['desc_atividade']
+        tar_entrega = request.form['data_da_atividade']
         tar_cat_id = 1
         tar_usu_id = 1
 
@@ -159,6 +159,8 @@ def agendar():
 @app.route('/visualizar')
 def visualizar():
     return render_template('visualizar.html')
-    
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)

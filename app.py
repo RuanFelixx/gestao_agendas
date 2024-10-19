@@ -6,6 +6,14 @@ from models import User, Contato
 from flask_mail import Mail, Message
 from config import email, senha
 
+# Cara, isso aqui tá uma baita bagunça, já mudei alguns dos link e até apague páginas que tava sendo totalmente inúteis, inclusive ainda tem páginas que tem que ser ajeitadas.
+# Oque fazer nesse primeiro momento:
+"""
+1ª - MySQLdb.OperationalError: (1045, "Access denied for user 'root'@'localhost' (using password: NO)")
+2ª - Vê se as páginas estão "respondendo" aos comandos
+3ª - A página visualizar não tem nada!
+"""
+
 
 app = Flask(__name__)
 app.secret_key = 'sebosao'

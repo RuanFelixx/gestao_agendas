@@ -42,6 +42,7 @@ def login():
         conn.execute('SELECT usu_senha FROM tb_usuarios WHERE usu_email=%s and usu_nome=%s', (email, nome))
         senha_hash = conn.fetchone()
         conn.close()  # Close cursor
+        
 
         if senha_hash and check_password_hash(senha_hash['usu_senha'], str(senha)):
             return redirect(url_for('index'))
@@ -117,7 +118,11 @@ def agendar():
 # Essa rota só pode ser finalizada quando os banco tiver funcionando, porque aqui é onde vão ser exibidas as tarefas
 @app.route('/visualizar')
 def visualizar():
-    return render_template('visualizar.html')
+    conn = conexao.connection.cursor()
+    conn.execute("SELECT * FROM tb_tarefas")
+    tarefas = conn.fetchall()
+    conn.close()
+    return render_template('visualizar.html', tarefas=tarefas)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -39,15 +39,15 @@ def login():
         email = request.form['email']
         senha = request.form['senha']
         conn = conexao.connection.cursor()
-        conn.execute('SELECT usu_senha FROM tb_usuarios WHERE usu_email=%s', (email,))
+        conn.execute('SELECT usu_senha FROM tb_usuarios WHERE usu_email=%s and usu_nome=%s', (email, nome))
         senha_hash = conn.fetchone()
         conn.close()  # Close cursor
 
         if senha_hash and check_password_hash(senha_hash['usu_senha'], str(senha)):
-            login_user(User.get_by_email(email))
             return redirect(url_for('index'))
         else:
-            return "Invalid email or password"  
+            return redirect(url_for('login'))
+          
     return render_template('login.html')
 
 @app.route('/cadastro', methods=['GET','POST'])

@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Visualizar Tarefas</title>
 </head>
 <body>
-    <h1>Opa!</h1>
+    <h1>Lista de Tarefas</h1>
+    
+    {% if tarefas %}
+        <ul>
+            {% for tarefa in tarefas %}
+                <li>
+                    <strong>{{ tarefa['tar_nome'] }}:</strong> 
+                    {{ tarefa['tar_descricao'] }} - Entrega: {{ tarefa['tar_entrega'] }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhuma tarefa encontrada.</p>
+    {% endif %}
+    
 </body>
 </html>

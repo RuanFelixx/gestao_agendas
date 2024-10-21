@@ -58,7 +58,9 @@
     <div class="container">
         <h2>Bem-vindo!</h2>
         <p>Organize suas atividades e provas de forma fácil e prática.</p>
-        <button onclick="location.href='/agendar'">Agendar Atividade</button>
+        <form action="{{url_for('agendar')}}">
+            <button >Agendar Atividade</button>
+        </form>
         <button onclick="location.href='/visualizar'">Visualizar Agendamentos</button>
         <button onclick="location.href='/login'">Login</button>
         <button onclick="location.href='/cadastro'">cadastro</button>

@@ -6,86 +6,69 @@
     <title>login</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-        * {
-            padding: 0;
-            margin: 0;
-            font-family: 'Poppins', Courier, monospace;
-            border: none;
+        *{
+            margin: 0%;
+            font-family: Arial, Helvetica, sans-serif;
         }
-
         body{
-            background-color: gray; 
-        }
-
-        .box{
+            height: 100%;
+            width: 100%;
             display: flex;
-            flex-direction: column;
-            background-color: rgb(196, 188, 188);
-            height: 50vh;
-            gap: 2rem;
-            padding: 3rem; 
-        }
-
-        .container{
-            display: flex;
-            justify-content: center;
             align-items: center;
-            width:  100vw;
-            height: 100vh;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .cadastro{
+            margin-top: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 500px;
+            width: 400px;
+            border: 1px solid black;
             border-radius: 10px;
-            background-color: #4CAF50;
         }
-
-        h1{
-            color:green ; 
+        .cadastro h1{
+            margin: 20px;
         }
-
-        input{ 
-            outline: none;
-            border: none;
-            padding: 0.5rem;
-            border-radius: 4px;
-            border-bottom-width: 2px;
-            border-bottom-style: solid;
-            border-bottom-color: rgb(0, 82, 0);
-            transition: 0.2s;
+        form{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
-
-        input:hover{
-            border-color:rgb(0, 82, 0);
+        form input {
+            margin: 5px;
+            
         }
-
-        button{
-            background-color: green;
-            color:green ; 
-            color: white;
-            padding: 0.5rem;
-            border: 0px;
-            border-radius: 3px;
-            transition: 0.2s;
+        form a {
+            text-decoration: none;
+            color: gray;
         }
-
-        button:hover{
-            background-color:rgb(0, 82, 0);;
-
+        form button{
+            color: gray;
+            background-color: black;
+            width: 100px;
+            border: 1px solid black;
+            border-radius: 10px;
+            margin: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="box">
-
-            <h1>cadastro</h1>
-            <form action="{{ url_for('cadastro') }}" method="POST"> 
-                <input type="text" name="nome" placeholder="nome">
-                <input type="email" name="email" placeholder="email">
-                <input type="password" name="senha" placeholder="senha">
-                <button type="submit">enviar</button>
-            </form>
-             
-        </div>
+    <div class="cadastro">
+        <h1>Cadastro</h1>
+        <form action="{{ url_for('cadastro') }}">
+            <label for="nome">Nome</label>
+            <input type="text" name="nome" placeholder="">
+            <label for="email">Email</label>
+            <input type="email" name="email" placeholder="">
+            <label for="senha">Senha</label>
+            <input type="password" name="password" placeholder="">
+            <button type="submit">Cadastrar</button>
+        
+        </form>
     </div>
-     
 </body>
 </html>

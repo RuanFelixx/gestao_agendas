@@ -7,133 +7,89 @@
 
     <style>
         *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+       }
+
+        header {
+            background: #4CAF50; 
+            color: white;
+            height: 15vh;
+            padding: 10px;
+            text-align: center; 
         }
 
-        .container{
-            display: flex;
-            flex-wrap: wrap;
-            flex-direction: column;
+        nav { 
+            margin: 15px 0; 
         }
 
-        .cabeca {
+        nav a {
+            margin: 0 15px; 
+            color: #333; 
+            text-decoration: none; 
+        }
+
+        .container {
+            padding: 20px;
+            height: 75vh;
+        }
+
+        footer { 
+            background: #333; 
+            color: white; 
+            text-align: center; 
+            padding: 10px;  
+            bottom: 0;
+            height: 10vh;
+            width: 100%;
+        }
+        
+
+        .formulario{
             display: flex;
-            justify-content: center;
             align-items: center;
             flex-direction: column;
-            gap: 1rem;
-            background: black; 
-            color: white;
-            height: 15vh;   
-        }
-
-        a{
-            text-decoration: none;
-            color: white;
-            padding: 1rem;
-            font-size: 20px;
-            transition: 0.3s;
-        }
-
-        a:hover{
-            color: gray;
+            height: 75vh;
         }
 
         .agenda{
-            height: 70vh;
-            gap: 2rem;
             display: flex;
             align-items: center;
-            justify-content: center;
             flex-direction: column;
-        }
-
-        form{
-            display: flex;
-            justify-content: space-evenly;
-            flex-direction: column;
-        }
-
-        form input,
-        form select,
-        form button {
-            margin-bottom: 1rem; 
-            border: 1px solid #ccc; 
-            border-radius: 5px; 
-            width: 100%; 
-            max-width: 300px; 
-            padding: 0.5rem; 
-            font-size: 16px; 
-            transition: border-color 0.3s;
-        }
-
-        form input:hover,
-        form select:hover {
-            border-color: #007BFF; 
-            background-color: #f0f8ff; 
-        }
-
-        .rodape{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: black;
-            height: 15vh;
-        }
-
-        .botao{
-            background-color: black;
-            color: white;
-            height: 5vh;
-            font-size: 15px;
-            border-radius: 25px;
-            transition: 0.3s;
-        }
-
-        .botao:hover{
-            color: gray;
-        }
-       
-        .contato{
-            color: white;
+            height: 75vh;
         }
     </style>
 
 </head>
 <body>
-    <div class="container">
-        <div class="cabeca">
-            <h1>Agendador de Atividades</h1>
-            <nav>
-                <a href="{{url_for('index')}}">Home</a>
-                <a href="{{url_for('visualizar')}}">Agendamentos</a>
-                <a href="{{url_for('login')}}">Login</a>
-            </nav>
-        </div>
+    <header>
+        <h1>Agendador de Atividades</h1>
+        <nav>
+            <a href="{{url_for('index')}}">Home</a>
+            <a href="{{url_for('visualizar')}}">Agendamentos</a>
+            <a href="{{url_for('login')}}">Login</a>
+        </nav>
+    </header>
 
-        <div class="agenda">
-            <h1>Agende sua atividade</h1>
-            <form action="{{ url_for('form') }}" method="POST">
-                <input type="text" name="nome_atividade" placeholder="Nome da atividade">
-                <input type="text" name="desc_atividade" placeholder="Descrição da atividade">
-                <input type="text" name="cat_nome" placeholder="Categoria">
-                <select name="prioridade" aria-placeholder="Prioridade">
-                    <option value="baixa">Baixa</option>
-                    <option value="media">Média</option>
-                    <option value="alta">Alta</option>
-                </select>
-                <input type="date" name="data_da_atividade">
-                <button type="submit" class="botao">agendar atividade</button>
-            </form>
-        </div>
-
-        <div class="rodape"> 
-            <p class="contato">Contato: sebosão@69.com</p>
-        </div>
+    <div class="agenda">
+        <h1>Agende sua atividade</h1>
+        <form action="{{ url_for('form') }}" method="POST">
+            <input type="text" name="nome_atividade" placeholder="Nome da atividade">
+            <input type="text" name="desc_atividade" placeholder="Descrição da atividade">
+            <input type="text" name="cat_nome" placeholder="Categoria">
+            <select name="prioridade" aria-placeholder="Prioridade">
+                <option value="baixa">Baixa</option>
+                <option value="media">Media</option>
+                <option value="alta">Alta</option>
+            </select>
+            <input type="date" name="data_da_atividade">
+            <button type="submit">agendar atividade</button>
+        </form>
     </div>
+
+    <footer>
+        <p>Contato: sebosão@69.com </p>
+    </footer>
 </body>
 </html>
-
-

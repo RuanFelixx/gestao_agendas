@@ -11,64 +11,116 @@
         box-sizing: border-box;
        }
 
-        header {
-            background: #4CAF50; 
+       .container{
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+        }
+
+
+        .cabeca{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 1rem;
+            background: black; 
+            gap: 1rem;
             color: white;
             height: 15vh;
-            padding: 10px;
-            text-align: center; 
+            padding: 10px; 
         }
 
-        nav { 
-            margin: 15px 0; 
+        a{
+            text-decoration: none;
+            color: white;
+            padding: 1rem;
+            font-size: 20px;
+            transition: 0.3s;
         }
 
-        nav a {
-            margin: 0 15px; 
-            color: #333; 
-            text-decoration: none; 
+        a:hover{
+            color: gray;
         }
 
-        .container {
+        .conteudo {
             padding: 20px;
-            height: 75vh;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .conteudo_div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border: 1px solid black;
+            border-radius: 10px;
+            gap: 1rem;
+            height: 350px;
+            width: 350px;
+        }
+        
+        button {
+            background-color: black;
+            color: white;
+            height: 35px;
+            width: 150px;
+            font-size: 15px;
+            border-radius: 25px;
+            transition: 0.3s;;
         }
 
-        footer { 
-            background: #333; 
+        button:hover{
+            color: gray;
+        }
+
+        .rodape { 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black; 
             color: white; 
-            text-align: center; 
             padding: 10px;  
             bottom: 0;
-            height: 10vh;
+            height: 15vh;
             width: 100%;
          }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Agendador de Atividades</h1>
-        <nav>
-            <a href="{{url_for('index')}}">Home</a>
-            <a href="{{url_for('visualizar')}}">Agendamentos</a>
-            <a href="{{url_for('login')}}">Login</a>
-        </nav>
-    </header>
-
     <div class="container">
-        <h2>Bem-vindo!</h2>
-        <p>Organize suas atividades e provas de forma fácil e prática.</p>
-        <form action="{{url_for('agendar')}}">
-            <button >Agendar Atividade</button>
-        </form>
-        <button onclick="location.href='/visualizar'">Visualizar Agendamentos</button>
-        <button onclick="location.href='/login'">Login</button>
-        <button onclick="location.href='/cadastro'">cadastro</button>
+        <div class="cabeca">
+            <h1>Agenda de Atividades</h1>
+            <nav>
+                <a href="{{url_for('index')}}">Home</a>
+                <a href="{{url_for('visualizar')}}">Agendamentos</a>
+                <a href="{{url_for('login')}}">Login</a>
+            </nav>
+        </div>
 
+        <div class="conteudo">
+            <div class="conteudo_div">
+                <h2>Bem-vindo!</h2>
+                <p>Organize suas atividades e provas.</p>
+                <form action="{{url_for('agendar')}}">
+                    <button >Agendar</button>
+                </form>
+                <button onclick="location.href='/visualizar'">Visualizar</button>
+                <button onclick="location.href='/login'">Login</button>
+                <button onclick="location.href='/cadastro'">cadastro</button>
+            </div>
+            
+
+        </div>
+
+        <div class="rodape">
+            <p>Contato: sebosão@69.com </p>
+        </div>
     </div>
-
-    <footer>
-        <p>Contato: sebosão@69.com </p>
-    </footer>
+    
 </body>
 </html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+       }
+
+       body {
+        justify-content: center ;
+        align-items: center;
+       }
+        
+        form {
+            display: inline;
+        }
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .container{
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+        }
+
+        .cabeca{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 1rem;
+            background: black; 
+            gap: 1rem;
+            color: white;
+            height: 15vh;
+            padding: 10px; 
+        }
+
+        a{
+            text-decoration: none;
+            color: white;
+            padding: 1rem;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+
+        a:hover{
+            color: gray;
+        }
+
+        #listatarefas {
+            align-items: baseline;
+            justify-content: center;
+        }
+
+        .task-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin: 5px;
+            padding: 10px;
+            border-left: 6px solid #6a6b6a;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-title {
+            font-size: 1em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .created-date {
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        .card-body {
+            margin-top: 10px;
+        }
+
+        #task-desc {
+            font-size: 1em;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        .card-body p {
+            font-size: 1em;
+            margin: 5px 0;
+        }
+
+        .card-body strong {
+            color: #333;
+        }
+
+        .task-card .card-body p {
+            font-size: 1em;
+            margin: 8px 0;
+        }
+
+        .task-card p {
+            font-size: 1em;
+            color: #424242;
+        }
+
+        /* Estiliza a prioridade */
+        .card-body p strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="cabeca">
+            <h1>Agenda de Atividades</h1>
+            <nav>
+                <a href="{{url_for('index')}}">Home</a>
+                {% if current_user.is_authenticated %}
+                    <a href="{{url_for('visualizar')}}">Agendamentos</a>
+                <a href="{{url_for('logout')}}">Logout</a>
+                {% endif %}
+            </nav>
+        </div>
+
+    <div class="task-card">
+        <form action="{{url_for('editar', id=tarefa['tar_id'])}}" method="POST">
+            <div class="card-header">
+                <h2>Editando</h2>
+                <input type="text" class="task-title" name="nome_atividade" value="{{tarefa['tar_nome']}}">
+                <p class="created-date">Criada em: {{tarefa['tar_datacriacao']}}</p>
+
+            </div>
+            
+            <div class="card-body">
+
+                <p>Descrição: </p><input type="text" id="task-desc" name="desc_atividade" value="{{tarefa['tar_descricao']}}">
+                <p><strong>Categoria:</strong>  <select name="cat_nome" aria-placeholder="Cateoria" required>
+                    <option value="" disabled selected >Categoria</option>
+                    <option value="Compromisso">Compromisso</option>
+                    <option value="Trabalho">Trabalho</option>
+                    <option value="Atividades">Atividades</option>
+                </select></p>
+
+                <p><strong>Prazo Limite:</strong> <input type="date" name="data_da_atividade" required value="{{tarefa['tar_entrega']}}"></p>
+
+                <p><strong>Prioridade:</strong> <select name="prioridade" aria-placeholder="Prioridade" required>
+                    <option value="" disabled selected >Prioridade</option>
+                    <option value="Baixa">Baixa</option>
+                    <option value="Media">Média</option>
+                    <option value="Alta">Alta</option>
+                </select></p>
+
+                <p><strong>Status:</strong> <select name="status" required>
+                    <option value="" disabled selected >Status</option>
+                    <option value="Em andamento">Em andamento</option>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Concluido">Concluído</option>
+                </select></p>
+
+            </div>
+
+            <button type="submit">Confirmar</button>
+
+        </form>
+    </div>
+</body>
+</html>

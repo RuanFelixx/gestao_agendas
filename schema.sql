@@ -18,12 +18,12 @@ CREATE TABLE IF NOT EXISTS tb_tarefas (
     tar_nome VARCHAR(45) NOT NULL,
     tar_descricao VARCHAR(200) NOT NULL,
     tar_entrega DATE,
-    tar_cat_id INT NOT NULL,
+    tar_datacriacao DATE,
     tar_status VARCHAR(45),
+    tar_cat VARCHAR (45),
     tar_prioridade VARCHAR(45) NOT NULL,
+    tar_cat_id INT NOT NULL,
     FOREIGN KEY (tar_cat_id) REFERENCES tb_categoria_tarefas(cat_id),
     tar_usu_id INT NOT NULL,
     FOREIGN KEY (tar_usu_id) REFERENCES tb_usuarios(usu_id)
 );
-
-

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina inicial</title>
+    <style>
+       *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+       }
+
+       .container{
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+        }
+
+
+        .cabeca{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 1rem;
+            background: black; 
+            gap: 1rem;
+            color: white;
+            height: 15vh;
+            padding: 10px; 
+        }
+
+        a{
+            text-decoration: none;
+            color: white;
+            padding: 1rem;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+
+        a:hover{
+            color: gray;
+        }
+
+        .conteudo {
+            padding: 20px;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .conteudo_div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border: 1px solid black;
+            border-radius: 10px;
+            gap: 1rem;
+            height: 350px;
+            width: 350px;
+        }
+        
+        button {
+            background-color: black;
+            color: white;
+            height: 35px;
+            width: 150px;
+            font-size: 15px;
+            border-radius: 25px;
+            transition: 0.3s;;
+        }
+
+        button:hover{
+            color: gray;
+        }
+
+        .rodape { 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black; 
+            color: white; 
+            padding: 10px;  
+            bottom: 0;
+            height: 15vh;
+            width: 100%;
+         }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cabeca">
+            <h1>Agenda de Atividades</h1>
+            <nav>
+                <a href="{{url_for('index')}}">Home</a>
+                {% if current_user.is_authenticated %}
+                    <a href="{{url_for('visualizar')}}">Agendamentos</a>
+                <a href="{{url_for('logout')}}">Logout</a>
+                {% endif %}
+            </nav>
+        </div>
+
+        <div class="conteudo">
+            <div class="conteudo_div">
+                <h2>Bem-vindo!</h2>
+                <p>Organize suas atividades e provas.</p>
+                {% if current_user.is_authenticated %}
+                <form action="{{url_for('agendar')}}">
+                    <button >Agendar</button>
+                </form>
+                <button onclick="location.href='/visualizar'">Visualizar</button>
+                {% else %}
+                <button onclick="location.href='/login'">Login</button>
+                <button onclick="location.href='/cadastro'">Cadastro</button>
+                {% endif %}
+            </div>
+            
+
+        </div>
+
+        <div class="rodape">
+            <p>Contato: sebosão@69.com </p>
+        </div>
+    </div>
+    
+</body>
+</html>
